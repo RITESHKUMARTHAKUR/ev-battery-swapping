@@ -128,53 +128,53 @@ SAMPLE_APIKEY=$(grep ORG1_APIKEY .env | cut -d '=' -f 2-)
 ```
 12.### Get all assets...
 ```shell
-curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/assets 
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3001/api/assets 
 ```
 ### Check whether an asset exists...
 
 ```shell
-curl --include --header "X-Api-Key: ${SAMPLE_APIKEY}" --request OPTIONS http://localhost:3000/api/assets/asset7
+curl --include --header "X-Api-Key: ${SAMPLE_APIKEY}" --request OPTIONS http://localhost:3001/api/assets/asset7
 
 
 ### Create an asset...
 
 ```shell
-curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request POST --data '{"ID":"asset7","Color":"red","Size":42,"Owner":"Jean","AppraisedValue":101}' http://localhost:3000/api/assets
+curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request POST --data '{"ID":"asset7","Color":"red","Size":42,"Owner":"Jean","AppraisedValue":101}' http://localhost:3001/api/assets
 ```
 
 ### Read job status...
 
 ```shell
-curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/jobs/__job_id__
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3001/api/jobs/__job_id__
 ```
 
 ### Read transaction status...
 
 ```shell
-curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/transactions/__transaction_id__
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3001/api/transactions/__transaction_id__
 
 ### Read an asset...
 
 ```shell
-curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/assets/asset7
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3001/api/assets/asset7
 ```
 
 ### Update an asset...
 
 ```shell
-curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request PUT --data '{"ID":"asset7","Color":"red","Size":11,"Owner":"Jean","AppraisedValue":101}' http://localhost:3000/api/assets/asset7
+curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request PUT --data '{"ID":"asset7","Color":"red","Size":11,"Owner":"Jean","AppraisedValue":101}' http://localhost:3001/api/assets/asset7
 ```
 
 ### Transfer an asset...
 
 ```shell
-curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request PATCH --data '[{"op":"replace","path":"/Owner","value":"Ashleigh"}]' http://localhost:3000/api/assets/asset7
+curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request PATCH --data '[{"op":"replace","path":"/Owner","value":"Ashleigh"}]' http://localhost:3001/api/assets/asset7
 ```
 
 ### Delete an asset...
 
 ```shell
-curl --include --header "X-Api-Key: ${SAMPLE_APIKEY}" --request DELETE http://localhost:3000/api/assets/asset7
+curl --include --header "X-Api-Key: ${SAMPLE_APIKEY}" --request DELETE http://localhost:3001/api/assets/asset7
 ```
 
 13. To close
@@ -224,12 +224,6 @@ Contributions are welcome! Here are several ways you can contribute:
 Once your PR is reviewed and approved, it will be merged into the main branch.
 
 </details>
-
----
-
-##  License
-
-This project is protected under the [SELECT-A-LICENSE](https://choosealicense.com/licenses) License. For more details, refer to the [LICENSE](https://choosealicense.com/licenses/) file.
 
 ---
 
