@@ -1,0 +1,116 @@
+1 Start Network inside fabric-samples/test-network directory:
+cd fabric-samples
+cd test-network
+./network.sh up
+
+2. 
+./network.sh createChannel 
+
+3.
+./network.sh deployCC -ccn basic -ccp ../asset-transfer-basic/chaincode-javascript -ccl javascript
+
+4. Export neccessary paths:
+
+export FABRIC_CFG_PATH=$PWD/../config/
+# Set environment variables for Org1
+export CORE_PEER_TLS_ENABLED=true
+export CORE_PEER_LOCALMSPID="Org1MSP"
+export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt
+export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/org1.example.com/users/Admin@org1.example.com/msp
+export CORE_PEER_ADDRESS=localhost:7051
+
+5.Invoke Chaincode:
+
+peer chaincode invoke -o localhost:7050 \
+--ordererTLSHostnameOverride orderer.example.com \
+--tls --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem \
+-C mychannel \
+-n basic \
+--peerAddresses localhost:7051 \
+--tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org1.example.com/peers/peer0.org1.example.com/tls/ca.crt \
+--peerAddresses localhost:9051 \
+--tlsRootCertFiles ${PWD}/organizations/peerOrganizations/org2.example.com/peers/peer0.org2.example.com/tls/ca.crt -c '{"function":"InitLedger","Args":[]}'
+
+6. Following should give some result
+peer chaincode query -C mychannel -n basic -c '{"Args":["GetAllAssets"]}'
+
+
+7. In `fabric-samples/asset-transfer-basic/rest-api-typescript`
+npm install
+npm run build
+
+8. genrate env file
+TEST_NETWORK_HOME=$HOME/fabric-samples/test-network npm run generateEnv
+
+9.
+export REDIS_PASSWORD=$(uuidgen)
+npm run start:redis
+
+	{If Error: docker: Error response from daemon: Conflict. The container name "/fabric-sample-redis" is already in use by container "1ec0e1b8bcc5d91d405f4fdbb6e47ae33101644e7c042419d65dd6245d70d5a9". You have to remove (or rename) that container to be able to reuse that name.
+
+then:-	9.1 run command: docker ps -a 
+	9.2 search for container id with same as displayed in above error (ie. 1ec0e1b8bcc5)
+	9.3 cmd :  docker rm 1ec0e1b8bcc5
+	}
+
+
+10. npm run start:dev
+
+11. SAMPLE_APIKEY=$(grep ORG1_APIKEY .env | cut -d '=' -f 2-)
+
+12.## Get all assets...
+
+```shell
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/assets 
+```
+### Check whether an asset exists...
+
+```shell
+curl --include --header "X-Api-Key: ${SAMPLE_APIKEY}" --request OPTIONS http://localhost:3000/api/assets/asset7
+
+
+### Create an asset...
+
+```shell
+curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request POST --data '{"ID":"asset7","Color":"red","Size":42,"Owner":"Jean","AppraisedValue":101}' http://localhost:3000/api/assets
+```
+
+## Read job status...
+
+```shell
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/jobs/__job_id__
+```
+
+Read transaction status...
+
+```shell
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/transactions/__transaction_id__
+
+### Read an asset...
+
+```shell
+curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3000/api/assets/asset7
+```
+
+# Update an asset...
+
+```shell
+curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request PUT --data '{"ID":"asset7","Color":"red","Size":11,"Owner":"Jean","AppraisedValue":101}' http://localhost:3000/api/assets/asset7
+```
+
+### Transfer an asset...
+
+```shell
+curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request PATCH --data '[{"op":"replace","path":"/Owner","value":"Ashleigh"}]' http://localhost:3000/api/assets/asset7
+```
+
+### Delete an asset...
+
+```shell
+curl --include --header "X-Api-Key: ${SAMPLE_APIKEY}" --request DELETE http://localhost:3000/api/assets/asset7
+```
+
+13. To close
+in test-network directory
+./network.sh down 
+
