@@ -244,6 +244,12 @@ Once your PR is reviewed and approved, it will be merged into the main branch.
 </details>
 
 ---
+##  License
+
+This project is protected under the [MIT](https://choosealicense.com/licenses/mit/) License. For more details, refer to the [LICENSE](https://github.com/RITESHKUMARTHAKUR/ev-battery-swapping/blob/f5188d55c23ea1a3b225435f70ce15e481dafd5e/LICENSE) file.
+
+---
+
 
 
 
