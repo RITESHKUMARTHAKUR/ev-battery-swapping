@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://img.icons8.com/?size=100&id=86079&format=png&color=ffffff" width="100" />
+  <img src="https://img.icons8.com/?size=100&id=86079&format=png&color=#b0b8b5" width="100" />
 </p>
 <p align="center">
     <h1 align="center">EV-BATTERY-SWAPPING</h1>
@@ -32,7 +32,8 @@
 <hr>
 The EV Battery Swapping project aims to provide a seamless and efficient solution for electric vehicle (EV) battery swapping. By leveraging a combination of different programming languages and technologies, this project offers a robust platform for managing battery swaps, ensuring quick turnaround times and maximizing EV uptime.
 <hr>
-##  Getting Started
+
+## Getting Started
 
 ***Requirements***
 
@@ -122,9 +123,26 @@ npm run start:redis
 ```sh
 npm run start:dev
 ```
-11.
+11. sample api key
 ```sh
 SAMPLE_APIKEY=$(grep ORG1_APIKEY .env | cut -d '=' -f 2-)
+```
+11.1 Copy value of sample api key
+```sh
+${SAMPLE_APIKEY}
+```
+11.2 open new terminal in fabric-frontend
+```sh
+cd fabric-frontend
+npm install
+```
+11.3 paste value of Sample key in `home.js` file
+```js
+X-api-key = sample_apikey
+```
+11.4 in terminal of fabric-frontend
+```sh
+npm start
 ```
 12.### Get all assets...
 ```shell
@@ -139,7 +157,7 @@ curl --include --header "X-Api-Key: ${SAMPLE_APIKEY}" --request OPTIONS http://l
 ### Create an asset...
 
 ```shell
-curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request POST --data '{"ID":"asset7","Color":"red","Size":42,"Owner":"Jean","AppraisedValue":101}' http://localhost:3001/api/assets
+curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request POST --data '{"ID":"asset7","Manufacturer":"xyz","SOH":92,"Owner":"Jean","AppraisedValue":101}' http://localhost:3001/api/assets
 ```
 
 ### Read job status...
@@ -162,7 +180,7 @@ curl --header "X-Api-Key: ${SAMPLE_APIKEY}" http://localhost:3001/api/assets/ass
 ### Update an asset...
 
 ```shell
-curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request PUT --data '{"ID":"asset7","Color":"red","Size":11,"Owner":"Jean","AppraisedValue":101}' http://localhost:3001/api/assets/asset7
+curl --include --header "Content-Type: application/json" --header "X-Api-Key: ${SAMPLE_APIKEY}" --request PUT --data '{"ID":"asset7","Manufacturer":"xyz","SOH":91,"Owner":"Jean","AppraisedValue":101}' http://localhost:3001/api/assets/asset7
 ```
 
 ### Transfer an asset...
